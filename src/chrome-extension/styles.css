@@ -1,0 +1,17 @@
+body {
+    min-width: 300px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  #textArea {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  #confirmBtn {
+    width: 100%;
+  }
+  
