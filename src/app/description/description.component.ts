@@ -20,13 +20,16 @@ export class DescriptionComponent {
     console.log('description page')
     if (chrome.runtime.onMessage != undefined) {
       chrome.runtime.onMessage.addListener((request: any) => {
-        if (request.mainTextFound === true) {
-          this.confirmBtnDisabled = false;
-          this.message = '';
-        } else {
-          this.confirmBtnDisabled = true;
-          this.message = 'Please show the modal before confirming';
-        }
+        console.log('description listener')
+        if (request.action == "validateDescriptionAvailable"){
+          if (request.mainTextFound === true) {
+            this.confirmBtnDisabled = false;
+            this.message = '';
+          } else {
+            this.confirmBtnDisabled = true;
+            this.message = 'Please show the modal before confirming';
+          }
+        }      
       });
     }
   }

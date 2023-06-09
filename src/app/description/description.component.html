@@ -11,7 +11,8 @@
         <div class="alert alert-warning" *ngIf="useChatGPT && !chatGPTConfigStatus">ChatGPT not configured yet</div>
       </div>
     <div>
-        <button class="btn btn-primary mb-2" [disabled]="confirmBtnDisabled" (click)="addDescription()">Add Description</button>        
+        <!-- <button class="btn btn-primary mb-2" [disabled]="confirmBtnDisabled" (click)="addDescription()">Add Description</button>         -->
+        <button class="btn btn-primary mb-2" (click)="addDescription()">Add Description</button>        
         <div *ngIf="confirmBtnDisabled" class="jira-page-required alert alert-warning" role="alert">You need to be inside the  Jira card and with the description editor selected</div>
         <div *ngIf="message != ''" class=" alert alert-warning" role="alert">{{ message }}</div>
         <!-- <button (click)="addSubTasks()" id="subtaskBtn">Create SubTasks</button> -->

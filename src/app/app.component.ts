@@ -15,7 +15,7 @@ export class AppComponent {
   selectedMenuItem: string = '';
 
   constructor(private resolver: ComponentFactoryResolver) {
-    this.injectContentScript();
+    //this.injectContentScript();
   }
 
   ngAfterViewInit() {

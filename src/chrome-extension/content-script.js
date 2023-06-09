@@ -6,18 +6,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     createSubTasks('my first subtask', true).then(() => {
       createSubTasks('my second subtask', true).then(() => {
         createSubTasks('my third subtask', true).then(() => {
-          createDescription('Essa é minha descricao', true);          
-        });        
+          createDescription('Essa é minha descricao', true);
+        });
       });
     });
   }
 
   if (request.action === 'descriptionText') {
-    var mainTextElements = document.getElementsByClassName('main-text');
+    createDescription('<b>Essa é minha</b> descricao' + request.text, true);
+    // var mainTextElements = document.getElementsByClassName('main-text');
 
-    for (var i = 0; i < mainTextElements.length; i++) {
-      mainTextElements[i].textContent = request.text;
-    }
+    // for (var i = 0; i < mainTextElements.length; i++) {
+    //   mainTextElements[i].textContent = request.text;
+    // }
   }
 });
 
@@ -75,32 +76,46 @@ function typeTextInInputElement(inputElement, text) {
 }
 
 function typeTextWithDelay(inputElement, text, delay) {
-  return new Promise(resolve => {    
+  return new Promise(resolve => {
     const typeInterval = setInterval(() => {
-      jQuery(inputElement).sendkeys(text);      
-        clearInterval(typeInterval);
-        setTimeout(() => {
-          simulateButtonCreateSubTaskClick();
-          resolve(); 
-        }, 2000);
+      jQuery(inputElement).sendkeys(text);
+      clearInterval(typeInterval);
+      setTimeout(() => {
+        simulateButtonCreateSubTaskClick();
+        resolve();
+      }, 2000);
     }, delay);
   });
 }
 
-async function createDescription(text){
-  return new Promise(resolve => {    
-    const typeInterval = setInterval(() => {
-      if (jQuery('div[role="textbox"]').length > 0){
-        jQuery('div[role="textbox"]').append(text);
-      }   
-        clearInterval(typeInterval);
-        setTimeout(() => {
-          simulateButtonSaveDescriptionClick();
-          resolve(); 
-        }, 2000);
-    }, delay);
+function createDescription(text) {
+  if (jQuery('div[role="textbox"]').length > 0) {
+    jQuery('div[role="textbox"]').append(text);
+  }
+  // clearInterval(typeInterval);
+  const typeInterval = setTimeout(() => {
+    simulateButtonSaveDescriptionClick();
+    resolve();
+    clearInterval(typeInterval);
+  }, 2000);
+}
+
+
+async function createDescription2(text) {
+  return new Promise(resolve => {
+    // const typeInterval = setInterval(() => {
+    if (jQuery('div[role="textbox"]').length > 0) {
+      jQuery('div[role="textbox"]').append(text);
+    }
+    // clearInterval(typeInterval);
+    const typeInterval = setTimeout(() => {
+      simulateButtonSaveDescriptionClick();
+      resolve();
+      clearInterval(typeInterval);
+    }, 2000);
+    // }, 2000);
   });
-  
+
 }
 
 // Main function to perform the actions
