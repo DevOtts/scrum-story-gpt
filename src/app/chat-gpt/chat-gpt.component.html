@@ -1,0 +1,15 @@
+
+  
+    <h3>Configure your ChatGPT token</h3>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">ChatGPT Token:</label>
+        <input class="form-control" [(ngModel)]="chatgptToken" />
+        <small id="emailHelp" class="form-text text-muted">We don't save your API Key in a server. This will be stored in your local environment in a localStorage called "jiraStoryGPT"</small>
+        <div *ngIf="chatgptToken != undefined && chatgptToken.length > maxChatGptApiKeyLength" class=" alert alert-success" role="alert">Your chatGPT API Key is configured!</div>
+        <div *ngIf="chatgptToken == undefined || chatgptToken == ''" class=" alert alert-info" role="alert"><a target="_blank" href="https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/">Learn how to get your API Key</a></div>
+      </div>
+      <div>
+          <button class="btn btn-primary mb-2" [disabled]="chatgptToken == undefined || chatgptToken == '' || chatgptToken.length < maxChatGptApiKeyLength" (click)="saveAPIKey()">Save Key</button>        
+          <div *ngIf="savedSuccess" class=" alert alert-success" role="alert">Saved!</div>          
+      </div>
+    

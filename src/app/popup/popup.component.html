@@ -1,0 +1,11 @@
+<!-- popup.component.html -->
+
+<div class="popup">
+    
+    <textarea [(ngModel)]="textInput"></textarea>        
+    <button [disabled]="confirmBtnDisabled" (click)="addDescription()">Confirm</button>
+    <p>{{ message }}</p>
+
+    <button (click)="addSubTasks()" id="subtaskBtn">Create SubTasks</button>
+  </div>
+  

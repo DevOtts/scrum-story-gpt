@@ -1,5 +1,17 @@
-<div style="text-align: center;">
-  <h1>Welcome to Jira GPT!</h1>
-  <p>This is a placeholder content for your Angular app.</p>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Jira Story GPT</h2>
+  </div>
+  <div class="modal-content">
+    <ng-container #modalContent></ng-container>
+  </div>
+  <div class="modal-menu">
+    <ul>
+      <li (click)="loadComponent('Description', $event)" [class.active]="selectedMenuItem === 'Description'">Description</li>
+      <li (click)="loadComponent('SubTasks', $event)" [class.active]="selectedMenuItem === 'SubTasks'">SubTasks</li>
+      <li (click)="loadComponent('ChatGPT', $event)" [class.active]="selectedMenuItem === 'ChatGPT'">ChatGPT</li>
+      <li (click)="loadComponent('Config', $event)" [class.active]="selectedMenuItem === 'Config'">Config</li>
+    </ul>
+  </div>
+  
 </div>
-<!-- https://kehe-projects.atlassian.net/browse/CD-1881 -->

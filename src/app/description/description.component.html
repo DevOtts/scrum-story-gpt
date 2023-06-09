@@ -1,0 +1,19 @@
+
+  
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Story Description</label>
+      <textarea class="form-control" [(ngModel)]="textInput" rows="3"></textarea>
+      <small id="emailHelp" class="form-text text-muted">If you are connected with chatGPT, it will understand your description and format with the prompt in the `main.template` file.</small>
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" [(ngModel)]="useChatGPT" class="form-check-input" id="useChatGPTCheck">
+        <label class="form-check-label" for="useChatGPTCheck">&nbsp; Use ChatGPT to enhance it</label>
+        <div class="alert alert-warning" *ngIf="useChatGPT && !chatGPTConfigStatus">ChatGPT not configured yet</div>
+      </div>
+    <div>
+        <button class="btn btn-primary mb-2" [disabled]="confirmBtnDisabled" (click)="addDescription()">Add Description</button>        
+        <div *ngIf="confirmBtnDisabled" class="jira-page-required alert alert-warning" role="alert">You need to be inside the  Jira card and with the description editor selected</div>
+        <div *ngIf="message != ''" class=" alert alert-warning" role="alert">{{ message }}</div>
+        <!-- <button (click)="addSubTasks()" id="subtaskBtn">Create SubTasks</button> -->
+    </div>
+  

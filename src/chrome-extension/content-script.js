@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
   }
 
-  if (request.action === 'replaceText') {
+  if (request.action === 'descriptionText') {
     var mainTextElements = document.getElementsByClassName('main-text');
 
     for (var i = 0; i < mainTextElements.length; i++) {
