@@ -9,10 +9,11 @@ import { SubTaskComponent } from './sub-task/sub-task.component';
 import { ChatGPTComponent } from './chat-gpt/chat-gpt.component';
 import { ConfigComponent } from './config/config.component';
 import { StorageService } from './services/storage.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, PopupComponent, DescriptionComponent, SubTaskComponent, ChatGPTComponent, ConfigComponent],
-  imports: [BrowserModule,FormsModule],
+  imports: [BrowserModule,FormsModule,HttpClientModule],
   providers: [
     StorageService
   ],

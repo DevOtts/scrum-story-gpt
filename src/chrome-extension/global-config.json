@@ -1,0 +1,10 @@
+{
+    "chatGPTKey": "",
+    "descriptionPrompt": "Traduza o texto abaixo: \n {description}",
+    "defaultSubTasks": [
+        "Developtment",
+        "Unit Tests",
+        "Testing",
+        "PO Approval"
+    ] 
+}

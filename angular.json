@@ -67,7 +67,11 @@
                 "input": "src/chrome-extension",
                 "output": "/"
               },
-
+              {
+                "glob": "global-config.json",
+                "input": "src/chrome-extension",
+                "output": "/"
+              },
               {
                 "glob": "popup.js",
                 "input": "src/chrome-extension",

@@ -3,6 +3,8 @@ import { DescriptionComponent } from './description/description.component';
 import { ChatGPTComponent } from './chat-gpt/chat-gpt.component';
 import { ConfigComponent } from './config/config.component';
 import { SubTaskComponent } from './sub-task/sub-task.component';
+import { StorageService } from './services/storage.service';
+import { GlobalConfig } from 'rxjs';
 declare const chrome: any;
 
 @Component({
@@ -14,12 +16,13 @@ export class AppComponent {
   @ViewChild('modalContent', { read: ViewContainerRef }) modalContentRef: ViewContainerRef | undefined;
   selectedMenuItem: string = '';
 
-  constructor(private resolver: ComponentFactoryResolver) {
-    //this.injectContentScript();
+  constructor(private storageService: StorageService, private resolver: ComponentFactoryResolver) {    
   }
 
   ngAfterViewInit() {
     console.log('after init')
+    //load globalConfig
+    this.storageService.load();
     this.loadComponent('Description', null)
   }
 
@@ -53,15 +56,6 @@ export class AppComponent {
       // Create the component dynamically and add it to the view
       const factory = this.resolver.resolveComponentFactory(component);
       const componentRef = this.modalContentRef.createComponent(factory);
-    }
-  }
-
-  private injectContentScript() {
-    console.log('injecting');
-    if (chrome.tabs != undefined) {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
-        chrome.tabs.executeScript(tabs[0].id, { file: 'content-script.js' });
-      });
     }
   }
 }
