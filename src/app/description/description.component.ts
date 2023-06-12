@@ -52,7 +52,8 @@ export class DescriptionComponent {
   }
 
   load(){
-    this.storageService.load()
+    var test =  this.storageService.load2()
+    console.log('test', test)
   }
 
   async addDescription() {
@@ -84,7 +85,7 @@ export class DescriptionComponent {
             .createCompletion({
               model: 'text-davinci-003',
               prompt: prompt,
-              max_tokens: 256
+              max_tokens: 2000
             })
             .then(response => {
               console.log('JiraGPT - answer GPT: ' + response.data.choices[0].text)

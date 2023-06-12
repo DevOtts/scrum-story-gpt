@@ -22,7 +22,7 @@ export class AppComponent {
   ngAfterViewInit() {
     console.log('after init')
     //load globalConfig
-    this.storageService.load();
+    this.storageService.load2();
     this.loadComponent('Description', null)
   }
 

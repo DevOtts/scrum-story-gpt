@@ -17,6 +17,28 @@ export class ChatGPTComponent {
     this.chatgptToken = this.storageService.getChatGPTKey();
   }
 
+  isValidApiKey(value: string): boolean {
+    // OpenAI API keys are expected to start with "sk-"
+    if (!value.startsWith("sk-")) {
+      return false;
+    }
+  
+    // OpenAI API keys should consist of 42 characters
+    if (value.length < 30) {
+      return false;
+    }
+  
+    // OpenAI API keys should consist of only alphanumeric characters
+    const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+    if (!alphanumericRegex.test(value.slice(3))) {
+      return false;
+    }
+  
+    return true;
+  }
+  
+  
+
   saveAPIKey() {
     if (this.chatgptToken != undefined){
       this.storageService.saveChatGPKey(this.chatgptToken.toString());

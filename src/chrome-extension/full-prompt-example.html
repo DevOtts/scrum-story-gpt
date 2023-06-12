@@ -1,0 +1,88 @@
+Act as a IT Business Analyst that works on a Product Development team. The Product Development team consists of Backend Engineers, Frontend Engineers, and Quality Assurance Engineers.
+The goal is to write an IT User Story that conveys the Business Need, and the Development Tasks needed to develop the User Story.
+The User Story will contain a Business Statement in a "As a", "I want", "So that" format.
+The User Story will contain multiple Acceptance Criteria each separated by a row. Each Acceptance Criteria will have a title describing what it accomplishes, and each Acceptance Criteria will be formatted in a "GIVEN", "WHEN", "THEN" format with one set of GIVEN, WHEN, THEN per Acceptance Criteria.
+The User Story will contain a "Tech Notes:" section which will cover any technical complexities, if there are any.
+The User Story will contain a Definition of Done statement.
+The User Story will provide a list of Test Cases for Quality Assurance Engineers to Test or Automate.
+Lastly, the User Story will include a scrum point estimate using Fibonacci for the complexity of the story. An experienced Engineer can complete 21 points in a 2 week (80 working hour) sprint.
+
+With that being said, bellow I describe to you the story that we need to create:
+
+---------
+
+We use Elastic Search to search by products at MyCompany inside MyEcommerce ecommerce. 
+We need to create a method specifically to filter by Super Deals. When the user click on filter by Super Deals, the API should filter and only bring products that is inside the Super Deals promotions.
+Technically we need to overcome the 10k items per search limitation that Elastic Search have. This can be done by using the aggregation as a hack to overcome this problem.
+
+The DoD of this story is to be able to see only Super Deals products when we filter by it.
+
+Why we need this is because nowadays the user can't filter by Super Deals promotions. 
+
+
+----------
+
+Your story must be written using the format bellow:
+
+```
+<div class="ak-renderer-document">
+    <div class="ak-editor-panel css-fwqww1" data-panel-type="note">
+        <div class="ak-editor-panel__icon"><span role="img" aria-label="Panel note" class="css-snhnyn"
+                style="--icon-primary-color: currentColor; --icon-secondary-color: var(--ds-surface, #FFFFFF);"><svg
+                    width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    role="presentation">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        fill="currentColor"></path>
+                </svg></span></div>
+        <div class="ak-editor-panel__content">
+            <p data-renderer-start-pos="2">Story Created with JIRA GPT</p>
+        </div>
+    </div>
+    <p data-renderer-start-pos="1">
+        As a [who will benefit from it]<br>
+        I want [the action that will be execute]<br>
+        So that [what the beneficiary will gain/will be able to do]</p>
+    <hr>
+    <!-- We can have multiple acceptence criterias -->
+
+    <p data-renderer-start-pos="177"><strong data-renderer-mark="true">Acceptance Criteria</strong></p>
+    <!-- Start Looping -->
+    <div class="ak-editor-panel css-fwqww1" data-panel-type="info">
+        <div class="ak-editor-panel__icon"><span role="img" aria-label="Panel info" class="css-snhnyn"
+                style="--icon-primary-color: currentColor; --icon-secondary-color: var(--ds-surface, #FFFFFF);"><svg
+                    width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    role="presentation">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        fill="currentColor"></path>
+                </svg></span></div>
+        <div class="ak-editor-panel__content">
+            <p data-renderer-start-pos="199"><strong data-renderer-mark="true">AC [sequencial number] - [Title of the
+                    Acceptance Criteria]</strong></p>
+            <p data-renderer-start-pos="273">GIVEN a CONNECT Retailer initiates a search for Super Deals<br>WHEN the
+                new Elastic Search method is implemented<br>THEN the search results will accurately display all the National
+                deals that are available for a particular customer</p>
+        </div>
+    </div>
+    <!-- End Looping -->
+    <hr>
+    <p data-renderer-start-pos="763"><strong data-renderer-mark="true">Why we are doing this:</strong> <br>
+        [give the reason why we are doing and need to do this story]</p>
+    <hr>
+    <p data-renderer-start-pos="763"><strong data-renderer-mark="true">Tech Notes:</strong></p>
+    <ul class="ak-ul" data-indent-level="1">
+        <li>
+            <p data-renderer-start-pos="778">
+                * [techinical note 1]
+                * [techinical note 2]
+                * [techinical note 3]
+                * … <!-- numbers of techinical note can vary -->
+            </p>
+        </li>
+    </ul>
+    <p data-renderer-start-pos="763"><strong data-renderer-mark="true">DoD:</strong> [summarize a Definition of Done
+        where it say when this task will be considered done.]</p>
+</div>
+
+```
+
+Send in a code format, please

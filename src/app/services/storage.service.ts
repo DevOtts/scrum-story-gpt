@@ -40,34 +40,6 @@ export class StorageService {
     return value ? JSON.parse(value) : null;
   }
 
-  load(): Observable<GlobalConfig> {
-    console.log('JiraGPT - loadStorage trying to load')
-    const value = localStorage.getItem(this.storageName);
-
-    if (value) {
-      return of(JSON.parse(value));
-    } else {
-      return this.loadGlobalConfigFromJson().pipe(
-        map((globalConfig: GlobalConfig | null) => {
-          if (globalConfig) {
-            console.log('JiraGPT - loadStorage loaded')
-            this.save(globalConfig);
-            return globalConfig;
-          } else {
-            console.log('JiraGPT - no file found')
-            // Return a default GlobalConfig object if loading fails
-            return new GlobalConfig('', '', []);
-          }
-        }),
-        catchError((error) => {
-          console.error('Error loading global config from JSON 2:', error);
-          return of(new GlobalConfig('', '', [])); // Return a default GlobalConfig instance
-        })
-       
-      );
-    }
-  }
-
   remove(): void {
     localStorage.removeItem(this.storageName);
   }
@@ -76,22 +48,55 @@ export class StorageService {
     localStorage.clear();
   }
 
-  private loadGlobalConfigFromJson(): Observable<GlobalConfig | null> {
-    console.log('getting file')
-    try {
-       // if (chrome.extension != undefined) {
-        const jsonFileURL = chrome.extension.getURL('global-config.json');      
-        return this.http.get<GlobalConfig>(jsonFileURL).pipe(
-          catchError((error) => {
-            console.error('Error loading global config from JSON:', error);
-            return of(new GlobalConfig('', '', [])); // Return a default GlobalConfig instance
-          })
-        );
-      //∫}
-    } catch (error) {
-      console.error('Catch error loading global config from JSON:', error);
-      return of(new GlobalConfig('', '', []));
+
+  async load2(): Promise<any> {
+
+    console.log('JiraGPT - loadStorage trying to load')
+    const value = localStorage.getItem(this.storageName);
+
+    if (value) {
+      return of(JSON.parse(value));
+    } else {
+      console.log('load2')
+      var global = await this.loadGlobalConfigFromJson2().then(
+        (data) => {
+          console.log('load2.1' , data)
+          var globalConfig: GlobalConfig = JSON.parse(data);
+          if (globalConfig) {
+            console.log('JiraGPT - loadStorage loaded')
+            this.save(globalConfig);
+            console.log('load2.2')
+            return globalConfig;
+          }
+          return '';
+        },
+        (err) => {
+          console.log('load error:', err);
+          return '';
+        }
+      );
     }
-  
+  }
+
+
+  async loadGlobalConfigFromJson2(): Promise<string> {
+    var obj = this;
+    return new Promise<string>((resolve, reject) => {
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', chrome.extension.getURL('global-config.json'), true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            //... The content has been read in xhr.responseText
+            console.log(xhr.responseText);
+            resolve(xhr.responseText);
+          }
+        };
+        xhr.send();
+      } catch (error) {
+        console.error('Catch error loading global config from JSON:', error);
+        reject('');
+      }
+    });
   }
 }
