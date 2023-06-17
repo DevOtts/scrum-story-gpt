@@ -5,6 +5,7 @@ import { ConfigComponent } from './config/config.component';
 import { SubTaskComponent } from './sub-task/sub-task.component';
 import { StorageService } from './services/storage.service';
 import { GlobalConfig } from 'rxjs';
+import { Emitter } from './models/emitter.model';
 declare const chrome: any;
 
 @Component({
@@ -15,6 +16,7 @@ declare const chrome: any;
 export class AppComponent {
   @ViewChild('modalContent', { read: ViewContainerRef }) modalContentRef: ViewContainerRef | undefined;
   selectedMenuItem: string = '';
+  loading: boolean = false
 
   constructor(private storageService: StorageService, private resolver: ComponentFactoryResolver) {    
   }
@@ -24,6 +26,12 @@ export class AppComponent {
     //load globalConfig
     this.storageService.load2();
     this.loadComponent('Description', null)
+
+    // if (chrome.tabs != undefined) {
+    //   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
+    //     chrome.tabs.sendMessage(tabs[0].id, { action: 'descriptionText', text: 'jiraGPT is working in your story... wait a minute please!' });
+    //   });
+    // }
   }
 
   loadComponent(componentName: string, event: Event | null) {
@@ -56,6 +64,13 @@ export class AppComponent {
       // Create the component dynamically and add it to the view
       const factory = this.resolver.resolveComponentFactory(component);
       const componentRef = this.modalContentRef.createComponent(factory);
-    }
+      
+      const childComponent = componentRef.instance as Emitter;
+
+      childComponent.loading.subscribe((type: any) => {        
+        console.log('loading:', type);
+        this.loading = type
+      });
+    }    
   }
 }

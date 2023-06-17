@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { StorageService } from '../services/storage.service';
+import { Emitter } from '../models/emitter.model';
 
 @Component({
   selector: 'app-chat-gpt',
   templateUrl: './chat-gpt.component.html',
   styleUrls: ['./chat-gpt.component.css']
 })
-export class ChatGPTComponent {
+export class ChatGPTComponent implements Emitter {
+  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public chatgptToken: string | undefined;
   public savedSuccess: boolean = false;

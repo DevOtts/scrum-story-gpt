@@ -5,6 +5,8 @@
         <label for="exampleFormControlTextarea1">ChatGPT Token:</label>
         <input class="form-control" [(ngModel)]="chatgptToken" />
         <small id="emailHelp" class="form-text text-muted">We don't save your API Key in a server. This will be stored in your local environment in a localStorage called "jiraStoryGPT"</small>
+        <br><br>
+        <small id="emailHelp" class="form-text text-muted">If you want to change the prompt for ChatGPT, you can locate it in `global-config.json` file. Remember to delete the localStorage to reload it.</small>
         <div *ngIf="chatgptToken != undefined && isValidApiKey(chatgptToken)" class=" alert alert-success" role="alert">Your chatGPT API Key seems to be valid!</div>
         <div *ngIf="chatgptToken != undefined && chatgptToken.length > 0 && !isValidApiKey(chatgptToken)" class=" alert alert-danger" role="alert">Your chatGPT API Key is not valid!</div>
         <div *ngIf="chatgptToken == undefined || chatgptToken == ''" class=" alert alert-info" role="alert"><a target="_blank" href="https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/">Learn how to get your API Key</a></div>

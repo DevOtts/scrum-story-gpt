@@ -5,20 +5,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'subTasks') {
     createSubTasks('my first subtask', true).then(() => {
       createSubTasks('my second subtask', true).then(() => {
-        createSubTasks('my third subtask', true).then(() => {
-          createDescription('Essa é minha descricao', true);
-        });
+        createSubTasks('my third subtask', true);
       });
     });
   }
 
   if (request.action === 'descriptionText') {
-    createDescription('<b>Essa é minha</b> descricao' + request.text, true);
-    // var mainTextElements = document.getElementsByClassName('main-text');
-
-    // for (var i = 0; i < mainTextElements.length; i++) {
-    //   mainTextElements[i].textContent = request.text;
-    // }
+    createDescription(request.text, true);
   }
 });
 
@@ -95,27 +88,8 @@ function createDescription(text) {
   // clearInterval(typeInterval);
   const typeInterval = setTimeout(() => {
     simulateButtonSaveDescriptionClick();
-    resolve();
     clearInterval(typeInterval);
   }, 2000);
-}
-
-
-async function createDescription2(text) {
-  return new Promise(resolve => {
-    // const typeInterval = setInterval(() => {
-    if (jQuery('div[role="textbox"]').length > 0) {
-      jQuery('div[role="textbox"]').append(text);
-    }
-    // clearInterval(typeInterval);
-    const typeInterval = setTimeout(() => {
-      simulateButtonSaveDescriptionClick();
-      resolve();
-      clearInterval(typeInterval);
-    }, 2000);
-    // }, 2000);
-  });
-
 }
 
 // Main function to perform the actions
