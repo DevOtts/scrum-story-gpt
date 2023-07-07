@@ -11,14 +11,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 
   if (request.action === 'descriptionText') {
-    createDescription(request.text, true);
+    console.log(request.text)
+    createDescription(request.text, request.saveIt);
   }
 });
-
-
-
-// content-script.ts
-// content-script.js
 
 // Simulates a click event on an element
 function simulateClick(element) {
@@ -81,15 +77,17 @@ function typeTextWithDelay(inputElement, text, delay) {
   });
 }
 
-function createDescription(text) {
+function createDescription(text, clickSave) {
   if (jQuery('div[role="textbox"]').length > 0) {
     jQuery('div[role="textbox"]').append(text);
   }
   // clearInterval(typeInterval);
-  const typeInterval = setTimeout(() => {
-    simulateButtonSaveDescriptionClick();
-    clearInterval(typeInterval);
-  }, 2000);
+  if (clickSave){
+    const typeInterval = setTimeout(() => {
+      simulateButtonSaveDescriptionClick();
+      clearInterval(typeInterval);
+    }, 2000);
+  }  
 }
 
 // Main function to perform the actions
