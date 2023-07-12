@@ -2,12 +2,27 @@
 console.log("content-ott 2.2");
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("content-ott addListener");
-  if (request.action === 'subTasks') {
-    createSubTasks('my first subtask', true).then(() => {
-      createSubTasks('my second subtask', true).then(() => {
-        createSubTasks('my third subtask', true);
-      });
-    });
+  if (request.action === 'subTasks' && request.subTasks) {
+   
+      try {
+        console.log('Creating subtasks:',request.subTasks);
+        createSubTasks(JSON.parse(request.subTasks))
+          .then(() => {
+            console.log('All items processed');
+          })
+          .catch(error => {
+            console.error('An error occurred:', error);
+          });
+        
+      } catch (error) {
+        console.error('An error occurred while creating subTasks:', error);
+      }
+
+    // createSubTasks('my first subtask', true).then(() => {
+    //   createSubTasks('my second subtask', true).then(() => {
+    //     createSubTasks('my third subtask', true);
+    //   });
+    // });
   }
 
   if (request.action === 'descriptionText') {
@@ -15,6 +30,48 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     createDescription(request.text, request.saveIt);
   }
 });
+
+function createDescription(text, clickSave) {
+  if (jQuery('div[role="textbox"]').length > 0) {
+    jQuery('div[role="textbox"]').append(text);
+  }
+  // clearInterval(typeInterval);
+  if (clickSave){
+    const typeInterval = setTimeout(() => {
+      simulateButtonSaveDescriptionClick();
+      clearInterval(typeInterval);
+    }, 2000);
+  }  
+}
+
+async function createSubTasks(list) {
+
+  simulateButtonAddSubTaskClick('Create subtask');
+
+  list.forEach(async (item, index) => {
+    var clickSubTask = !(index === list.length - 1);
+    await createSubTask(item,clickSubTask);
+  });
+  // for (const item of list) {
+  //   await createSubTask(item, true);
+  // }
+}
+
+// Main function to perform the actions
+async function createSubTask(text, clickSubTask) {  
+  const inputElement = getFocusedInputElement();
+  if (inputElement) {
+    
+    //await typeTextWithDelay(inputElement, text, 100);
+    await typingText(inputElement, text, 100).then(() => {
+       clickSubTask(inputElement, text, 100).then(() => {
+        setTimeout(()=>{},500);
+       });
+    });
+    
+  }
+}
+
 
 // Simulates a click event on an element
 function simulateClick(element) {
@@ -77,27 +134,20 @@ function typeTextWithDelay(inputElement, text, delay) {
   });
 }
 
-function createDescription(text, clickSave) {
-  if (jQuery('div[role="textbox"]').length > 0) {
-    jQuery('div[role="textbox"]').append(text);
-  }
-  // clearInterval(typeInterval);
-  if (clickSave){
-    const typeInterval = setTimeout(() => {
-      simulateButtonSaveDescriptionClick();
+function typingText(inputElement,text,delay) {
+  return new Promise(resolve => {
+    const typeInterval =  setInterval(function(){
+      jQuery(inputElement).sendkeys(text);
       clearInterval(typeInterval);
-    }, 2000);
-  }  
+      resolve();
+     }, delay)
+    });
 }
 
-// Main function to perform the actions
-async function createSubTasks(text, clickSubTask) {
-
-  if (clickSubTask)
-    simulateButtonAddSubTaskClick('Create subtask');
-
-  const inputElement = getFocusedInputElement();
-  if (inputElement) {
-    await typeTextWithDelay(inputElement, text, 100);
-  }
+function clickSubTask() {
+  return new Promise(resolve =>
+    setTimeout(() => {
+      simulateButtonCreateSubTaskClick();
+      resolve();
+    }, 2000));
 }

@@ -24,7 +24,7 @@ export class AppComponent {
   ngAfterViewInit() {
     console.log('after init')
     //load globalConfig
-    this.storageService.load2();
+    this.storageService.load();
     this.loadComponent('Description', null)
 
     // if (chrome.tabs != undefined) {

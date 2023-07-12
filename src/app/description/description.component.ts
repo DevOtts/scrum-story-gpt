@@ -50,13 +50,14 @@ export class DescriptionComponent implements Emitter {
         this.openai = new OpenAIApi(new Configuration({
           apiKey: global.chatGPTKey,
         }));
+        console.log('openai instantiated')
       }
     }
     console.log('description init')
   }
 
   load() {
-    var test = this.storageService.load2()
+    var test = this.storageService.load()
     console.log('test', test)
   }
 
@@ -107,6 +108,7 @@ export class DescriptionComponent implements Emitter {
           console.log('JiraGPT - prompt: ' + prompt)
           this.openai
             .createCompletion({
+              //model: 'gpt-3.5-turbo',
               model: 'text-davinci-003',
               prompt: prompt,
               max_tokens: 2000
@@ -136,9 +138,14 @@ export class DescriptionComponent implements Emitter {
     var obj = this;
     this.loading.emit(true);
 
+    var subTasks = this.storageService.getSubTasks();
+    console.log(subTasks)
+    var strSubTasks = JSON.stringify(subTasks) 
+    console.log(strSubTasks)
+
     if (chrome.tabs != undefined) {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'subTasks' });
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'subTasks', subTasks : strSubTasks});
         obj.loading.emit(false);
       });
     }

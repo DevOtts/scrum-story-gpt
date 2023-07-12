@@ -1,0 +1,26 @@
+.editable-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .editable-list-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .item-input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .add-button,
+  .remove-button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  .add-button{
+    float:right
+  }

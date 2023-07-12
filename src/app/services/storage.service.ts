@@ -22,6 +22,20 @@ export class StorageService {
     return global?.descriptionPrompt;
   }
 
+  getSubTasks(): string[] | undefined {
+    var global = this.get();
+    return global?.defaultSubTasks;
+  }
+
+  saveSubTasks(subTasks: string[]) {
+    var global = this.get();
+    if (global == null) {
+      global = {} as GlobalConfig
+    }
+    global.defaultSubTasks = subTasks
+    this.save(global);
+  }
+
   saveChatGPKey(chatgptToken: string) {
     var global = this.get();
     if (global == null) {
@@ -49,7 +63,7 @@ export class StorageService {
   }
 
 
-  async load2(): Promise<any> {
+  async load(): Promise<any> {
 
     console.log('JiraGPT - loadStorage trying to load')
     const value = localStorage.getItem(this.storageName);
@@ -58,7 +72,7 @@ export class StorageService {
       return of(JSON.parse(value));
     } else {
       console.log('load2')
-      var global = await this.loadGlobalConfigFromJson2().then(
+      var global = await this.loadGlobalConfigFromJson().then(
         (data) => {
           console.log('load2.1' , data)
           var globalConfig: GlobalConfig = JSON.parse(data);
@@ -79,7 +93,7 @@ export class StorageService {
   }
 
 
-  async loadGlobalConfigFromJson2(): Promise<string> {
+  async loadGlobalConfigFromJson(): Promise<string> {
     var obj = this;
     return new Promise<string>((resolve, reject) => {
       try {

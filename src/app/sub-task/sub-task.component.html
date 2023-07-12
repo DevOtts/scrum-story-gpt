@@ -1,1 +1,9 @@
-<p>sub-task works!</p>
+<div class="editable-list">
+    <div *ngFor="let item of items; let i = index; trackBy: trackByFn" class="editable-list-row">
+        <input [(ngModel)]="items[i]" class="item-input" />
+        <button (click)="removeItem(i)" class="remove-button">-</button>
+      </div>
+    <button (click)="addItem()" class="add-button">+</button>
+    <br>
+    <button (click)="saveChanges()" class="btn btn-primary mb-2">save</button>
+  </div>
