@@ -148,6 +148,7 @@ export class DescriptionComponent implements Emitter {
         chrome.tabs.sendMessage(tabs[0].id, { action: 'subTasks', subTasks : strSubTasks});
         obj.loading.emit(false);
       });
+      obj.loading.emit(false);   
     }
   }
 }
