@@ -27,6 +27,11 @@ export class StorageService {
     return global?.defaultSubTasks;
   }
 
+  getPlatform(): string | undefined {
+    var global = this.get();
+    return global?.platform;
+  }
+
   saveSubTasks(subTasks: string[]) {
     var global = this.get();
     if (global == null) {

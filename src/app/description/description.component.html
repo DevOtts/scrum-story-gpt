@@ -16,7 +16,7 @@
         <button class="btn btn-primary mb-2" (click)="addDescription()">Add Description</button>        
         &nbsp;<button class="btn btn-primary mb-2"  (click)="addSubTasks()" id="subtaskBtn">Create SubTasks</button>
         <!-- <button class="btn btn-primary mb-2" (click)="load()">load file</button>         -->
-        <div *ngIf="confirmBtnDisabled" class="jira-page-required alert alert-warning" role="alert">You need to be inside the  Jira card and with the description editor selected</div>
+        <div *ngIf="confirmBtnDisabled" class="jira-page-required alert alert-warning" role="alert">You need to be inside the  Jira card and with the description on editor mode.</div>
         <div *ngIf="message != ''" class=" alert alert-warning" role="alert">{{ message }}</div>
         
     </div>

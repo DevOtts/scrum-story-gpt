@@ -86,14 +86,15 @@ export class DescriptionComponent implements Emitter {
       try {
         console.log('adding content to description')
         console.log(textIn)
+        var platform = this.storageService.getPlatform();
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
-          chrome.tabs.sendMessage(tabs[0].id, { action: 'descriptionText', text: textIn, saveIt: true });
-          console.log('loading false')
+          chrome.tabs.sendMessage(tabs[0].id, { platform: platform, action: 'descriptionText', text: textIn, saveIt: true });
+          obj.loading.emit(false);
         });
-        obj.loading.emit(false);   
+        obj.loading.emit(false);
       } catch (error) {
         obj.loading.emit(false);
-      }     
+      }
     }
   }
 
@@ -137,18 +138,15 @@ export class DescriptionComponent implements Emitter {
   addSubTasks() {
     var obj = this;
     this.loading.emit(true);
-
     var subTasks = this.storageService.getSubTasks();
-    console.log(subTasks)
-    var strSubTasks = JSON.stringify(subTasks) 
-    console.log(strSubTasks)
+    var strSubTasks = JSON.stringify(subTasks)
+    var platform = this.storageService.getPlatform();
 
     if (chrome.tabs != undefined) {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'subTasks', subTasks : strSubTasks});
+        chrome.tabs.sendMessage(tabs[0].id, { platform: platform, action: 'subTasks', subTasks: strSubTasks });
         obj.loading.emit(false);
       });
-      obj.loading.emit(false);   
     }
   }
 }

@@ -83,6 +83,16 @@
                 "output": "/"
               },
               {
+                "glob": "jira.js",
+                "input": "src/chrome-extension",
+                "output": "/"
+              },
+              {
+                "glob": "trello.js",
+                "input": "src/chrome-extension",
+                "output": "/"
+              },
+              {
                 "glob": "background.js",
                 "input": "src/chrome-extension",
                 "output": "/"
