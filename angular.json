@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "jira-story-gpt": {
+    "scrum-story-gpt": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {          
           "builder": "@angular-devkit/build-angular:browser",
           "options": {            
-            "outputPath": "dist/jira-story-gpt",
+            "outputPath": "dist/scrum-story-gpt",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -139,10 +139,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "jira-story-gpt:build:production"
+              "browserTarget": "scrum-story-gpt:build:production"
             },
             "development": {
-              "browserTarget": "jira-story-gpt:build:development"
+              "browserTarget": "scrum-story-gpt:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -150,7 +150,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jira-story-gpt:build"
+            "browserTarget": "scrum-story-gpt:build"
           }
         },
         "test": {
