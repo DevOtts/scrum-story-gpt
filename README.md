@@ -11,6 +11,7 @@ To start adding story descriptions follow these steps:
 4. If you already configured your OpenAI Key, keep selecting the checkbox "Use ChatGPT to enhance it" and it will create a full scrum story based on a scrum template.
 5. If you unselect the checkbox, it will add your raw text to the description box.
 
+> Important to say that adding the description may take from 30 seconds to 1 minute. 
 ![How to add a description](blob/howto-descriptions.gif)
 
 ## Examples of a good description
