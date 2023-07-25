@@ -1,6 +1,6 @@
 # Scrum Story GPT
 
-This Chrome Extension was created to save you a bunch of time when you are creating your Scrum Stories. It will help on writing the sprint stories on the write format and subtasks in one click.
+This Chrome Extension was created to save you a bunch of time when you are creating your Scrum Stories. It will help on writing the sprint stories in the written format and subtasks in one click.
 
 ## How to add Story Descriptions
 
@@ -15,32 +15,34 @@ To start adding story descriptions follow these steps:
 
 ## Examples of a good description
 
-**What is a good pattern to use: Explain WHAT you want,WHICH steps and Acceptence Criterias, WHY you need this story, HOW you will test it and WHAT is the definition of done.**
+**What is a good pattern to use: Explain WHAT you want, WHICH steps and Acceptance criteria, WHY you need this story, HOW you will test it and WHAT is the definition of done.**
 
 ---------
 *Simple example used in the example above*
-"Create a story where the goal is to make me a more relaxed person"
+
+> "Create a story where the goal is to make me a more relaxed person"
 
 ---------
 
 *The more details you give, the better the AI will understand and have more data to create a much better story*
-We need to change the world so we can save the planet. To do that we need to stop wars and create more innovative ways
-of new plants.
-When we are able to have quality life for all, we accomplish our goal
+
+> We need to change the world so we can save the planet. To do that we need to stop wars and create more innovative ways
+> of new plants.
+> When we are able to have a quality life for all, we accomplish our goal
 
 -------
 
-*This is an example that we consider the best pattern to use. The description bellow gave enough data so the IA can create really good content for each section of the Scrum Template*
+*This is an example that we consider the best pattern to use. The description below gave enough data so the IA can create really good content for each section of the Scrum Template*
 
-We use Elastic Search to search by products at MyCompany inside MyEcommerce ecommerce.
-We need to create a method specifically to filter by Super Deals. When the user click on filter by Super Deals, the API
-should filter and only bring products that is inside the Super Deals promotions.
-Technically we need to overcome the 10k items per search limitation that Elastic Search have. This can be done by using
-the aggregation as a hack to overcome this problem.
-
-The DoD of this story is to be able to see only Super Deals products when we filter by it.
-
-Why we need this is because nowadays the user can't filter by Super Deals promotions.
+> "We use Elastic Search to search by products at MyCompany inside MyEcommerce ecommerce.
+> We need to create a method specifically to filter by Super Deals. When the user clicks on the filter by Super Deals, the API
+> should filter and only bring products inside the Super Deals promotions.
+> Technically we need to overcome Elastic Search's 10k items per search limitation. This can be done by using
+> the aggregation as a hack to overcome this problem.
+> 
+> The DoD of this story is to be able to see only Super Deals products when we filter by it.
+> 
+> We need this because the user can't filter by Super Deals promotions."
 
 ## Prompt
 
@@ -71,7 +73,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 2. Install the dependencies with `npm install`
 3. Run the following command to create the `extension` folder
 
-```ng build --output-path extension``````
+```
+ng build --output-path extension
+```
 
 4. After this, add the unload package in /extension as a chrome extension
 
