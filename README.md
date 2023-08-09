@@ -2,6 +2,10 @@
 
 This Chrome Extension was created to save you a bunch of time when you are creating your Scrum Stories. It will help on writing the sprint stories in the written format and subtasks in one click.
 
+| 🦄 Help the community                     | 
+|-------------------------------------------|
+| For now, Scrum Story GPT is implemented only for *`JIRA`*! This is open source and feel free to implement it for other platforms.|
+
 ## How to add Story Descriptions
 
 To start adding story descriptions follow these steps:
