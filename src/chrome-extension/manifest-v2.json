@@ -1,13 +1,13 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Scrum Story GPT",
-  "version": "1.2",
+  "version": "1.0",
   "icons": {
     "16": "assets/icon16.png",
     "48": "assets/icon48.png",
     "128": "assets/icon128.png"
   },
-  "action": {
+  "browser_action": {
     "default_popup": "index.html",
     "default_icon": {
       "16": "assets/icon16.png",
@@ -15,18 +15,16 @@
       "128": "assets/icon128.png"
     }
   },
-  "permissions": ["activeTab", "scripting", "debugger"],
+  "permissions": ["activeTab", "debugger"],
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["assets/jquery.3.7.0.min.js", "assets/bililiteRange.js", "assets/jquery.sendkeys.js", "jira.js", "trello.js", "content-script.js"],
+      "js": ["assets/jquery.3.7.0.min.js", "assets/bililiteRange.js", "assets/jquery.sendkeys.js","jira.js","trello.js","content-script.js"],
       "run_at": "document_end"
     }
   ],
   "background": {
-    "service_worker": "background.js"
-  },
-  "host_permissions": [
-    "*://*/*"
-  ]
+    "scripts": ["background.js"],
+    "persistent": false
+  }
 }
