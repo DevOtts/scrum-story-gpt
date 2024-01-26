@@ -11,12 +11,16 @@ export class ChatGPTComponent implements Emitter {
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public chatgptToken: string | undefined;
+  public chatgptPrompt: string | undefined;
+  
   public savedSuccess: boolean = false;
+  public savedPromptSuccess: boolean = false;
   public maxChatGptApiKeyLength = 10
 
   constructor(private storageService: StorageService) {
     console.log('chatgpt config')
     this.chatgptToken = this.storageService.getChatGPTKey();
+    this.chatgptPrompt = this.storageService.getPrompt();
   }
 
   isValidApiKey(value: string): boolean {
@@ -38,14 +42,18 @@ export class ChatGPTComponent implements Emitter {
   
     return true;
   }
-  
-  
 
   saveAPIKey() {
     if (this.chatgptToken != undefined){
       this.storageService.saveChatGPKey(this.chatgptToken.toString());
       this.savedSuccess = true
-    }
-      
+    }      
+  }
+
+  savePrompt() {
+    if (this.chatgptPrompt != undefined){
+      this.storageService.savePrompt(this.chatgptPrompt);
+      this.savedPromptSuccess = true
+    }      
   }
 }

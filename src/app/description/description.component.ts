@@ -22,6 +22,7 @@ export class DescriptionComponent implements Emitter {
   chatGPTConfigStatus: boolean = false
   chatGptError: boolean = false
   openai: OpenAIApi | undefined;
+  gptModel = 'gpt-3.5-turbo';
 
   constructor(private storageService: StorageService) {
     console.log('description page')
@@ -103,14 +104,16 @@ export class DescriptionComponent implements Emitter {
     var obj = this;
     if (this.openai !== undefined) {
       var prompt = this.storageService.getPrompt();
-      //test - prompt = 'oi, tudo bom?'
+      
+      console.log('prompt:', prompt)
+
       if (prompt != null) {
         prompt = prompt.replace('{description}', description);
         console.log('scrumStoryGPT - prompt: ' + prompt)
 
         try {
           var response = await this.openai.createChatCompletion({
-            model: 'gpt-3.5-turbo',
+            model: this.gptModel,
             messages: [{ role: "user", content: prompt }],
             max_tokens: 2000
           });

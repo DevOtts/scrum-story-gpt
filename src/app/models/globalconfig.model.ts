@@ -2,7 +2,7 @@ export class GlobalConfig {
     chatGPTKey: string;
     platform: string;
     descriptionPrompt: string;
-    defaultSubTasks: any[];  
+    defaultSubTasks: any[];
 
     constructor(chatGPTKey: string,platform: string, descriptionPrompt: string, defaultSubTasks: any[]) {
         this.chatGPTKey = chatGPTKey;
