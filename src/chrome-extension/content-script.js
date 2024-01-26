@@ -1,5 +1,6 @@
 chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
   try {
+    console.log('Received request:', request);
     if (request.platform === 'jira'){
       const jiraClient = new Jira();
       if (request.action === 'subTasks' && request.subTasks) {

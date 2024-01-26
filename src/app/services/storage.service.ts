@@ -103,7 +103,7 @@ export class StorageService {
     return new Promise<string>((resolve, reject) => {
       try {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', chrome.extension.getURL('global-config.json'), true);
+        xhr.open('GET', chrome.runtime.getURL('global-config.json'), true);
         xhr.onreadystatechange = function () {
           if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             //... The content has been read in xhr.responseText

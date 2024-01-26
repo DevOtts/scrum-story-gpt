@@ -198,6 +198,8 @@ export class DescriptionComponent implements Emitter {
     var strSubTasks = JSON.stringify(subTasks)
     var platform = this.storageService.getPlatform();
 
+    console.log('add subtasks', strSubTasks)
+    console.log('chrometabs',chrome.tabs)
     if (chrome.tabs != undefined) {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
         chrome.tabs.sendMessage(tabs[0].id, { platform: platform, action: 'subTasks', subTasks: strSubTasks });
