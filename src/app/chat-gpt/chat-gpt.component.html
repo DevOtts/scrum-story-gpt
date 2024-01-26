@@ -1,18 +1,45 @@
+<div>
+    <h2>Configure your ChatGPT</h2>
+    <div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">ChatGPT Token:</label>
+            <input class="form-control" [(ngModel)]="chatgptToken" />
+            <small id="emailHelp" class="form-text text-muted">We don't save your API Key in a server. This will be
+                stored in
+                your local environment in a localStorage called "jiraStoryGPT"</small>
+            <br><br>            
+            <div *ngIf="chatgptToken != undefined && isValidApiKey(chatgptToken)" class=" alert alert-success"
+                role="alert">Your
+                chatGPT API Key seems to be valid!</div>
+            <div *ngIf="chatgptToken != undefined && chatgptToken.length > 0 && !isValidApiKey(chatgptToken)"
+                class=" alert alert-danger" role="alert">Your chatGPT API Key is not valid!</div>
+            <div *ngIf="chatgptToken == undefined || chatgptToken == ''" class=" alert alert-info" role="alert"><a
+                    target="_blank" href="https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/">Learn how to
+                    get your
+                    API Key</a></div>
+        </div>
+        <div>
+            <button class="btn btn-primary mb-2"
+                [disabled]="chatgptToken == undefined || chatgptToken == '' || !isValidApiKey(chatgptToken)"
+                (click)="saveAPIKey()">Save Key</button>
+            <div *ngIf="savedSuccess" class=" alert alert-success" role="alert">Saved!</div>
+        </div>
+    </div>
+    <div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">ChatGPT Prompt:</label>
+            <input class="form-control" [(ngModel)]="chatgptPrompt" />
+            <small>Make sure to add {{ '{' }}description{{ '}' }} in your prompt to add the description in the prompt.</small>
 
-  
-    <h3>Configure your ChatGPT token</h3>
-    <div class="form-group">
-        <label for="exampleFormControlTextarea1">ChatGPT Token:</label>
-        <input class="form-control" [(ngModel)]="chatgptToken" />
-        <small id="emailHelp" class="form-text text-muted">We don't save your API Key in a server. This will be stored in your local environment in a localStorage called "jiraStoryGPT"</small>
-        <br><br>
-        <small id="emailHelp" class="form-text text-muted">If you want to change the prompt for ChatGPT, you can locate it in `global-config.json` file. Remember to delete the localStorage to reload it.</small>
-        <div *ngIf="chatgptToken != undefined && isValidApiKey(chatgptToken)" class=" alert alert-success" role="alert">Your chatGPT API Key seems to be valid!</div>
-        <div *ngIf="chatgptToken != undefined && chatgptToken.length > 0 && !isValidApiKey(chatgptToken)" class=" alert alert-danger" role="alert">Your chatGPT API Key is not valid!</div>
-        <div *ngIf="chatgptToken == undefined || chatgptToken == ''" class=" alert alert-info" role="alert"><a target="_blank" href="https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/">Learn how to get your API Key</a></div>
-      </div>
-      <div>
-          <button class="btn btn-primary mb-2" [disabled]="chatgptToken == undefined || chatgptToken == '' || !isValidApiKey(chatgptToken)" (click)="saveAPIKey()">Save Key</button>        
-          <div *ngIf="savedSuccess" class=" alert alert-success" role="alert">Saved!</div>          
-      </div>
-    
+            <br><br>
+            <small id="emailHelp" class="form-text text-muted">We have a default prompt with a standard format to create Stories and ACs. If you use a different format, feel free to edit the prompt. After changed, if you want to restore the default prompt, you will need to reinstall the extension.</small>
+            <br><br>
+        </div>
+        <div>
+            <button class="btn btn-primary mb-2"
+                [disabled]="chatgptPrompt == undefined || chatgptPrompt == ''"
+                (click)="savePrompt()">Save Prompt</button>
+            <div *ngIf="savedPromptSuccess" class=" alert alert-success" role="alert">Saved!</div>
+        </div>
+    </div>
+</div>
