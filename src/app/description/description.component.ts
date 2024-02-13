@@ -20,6 +20,7 @@ export class DescriptionComponent implements Emitter {
   description: string = '';
   useChatGPT: boolean = true;
   chatGPTConfigStatus: boolean = false
+  openAIApiErrorLbl: boolean = false
   chatGptError: boolean = false
   openai: OpenAIApi | undefined;
   gptModel = 'gpt-3.5-turbo';
@@ -46,8 +47,9 @@ export class DescriptionComponent implements Emitter {
     var global = this.storageService.get()
     if (global != null) {
       if (global.chatGPTKey != null && global.chatGPTKey.length >= 10) {
-        this.chatGPTConfigStatus = true;
+        this.chatGPTConfigStatus = true;        
         this.useChatGPT = true;
+        this.openAIApiErrorLbl = false;
         this.openai = new OpenAIApi(new Configuration({
           apiKey: global.chatGPTKey,
         }));
@@ -103,8 +105,9 @@ export class DescriptionComponent implements Emitter {
   async generateText(description: string) {
     var obj = this;
     if (this.openai !== undefined) {
+      this.openAIApiErrorLbl = false
       var prompt = this.storageService.getPrompt();
-      
+
       console.log('prompt:', prompt)
 
       if (prompt != null) {
@@ -119,6 +122,7 @@ export class DescriptionComponent implements Emitter {
           });
 
           if (!response.data || !response.data.choices) {
+            this.openAIApiErrorLbl = true
             return {
               success: false,
               text: "The bot didn't respond. Please try again later.",
@@ -133,6 +137,7 @@ export class DescriptionComponent implements Emitter {
 
         } catch (error: any) {
           console.log('OpenAI Error', error)
+          this.openAIApiErrorLbl = true
           return {
             success: false,
             text: error?.message,
@@ -156,44 +161,6 @@ export class DescriptionComponent implements Emitter {
 
   }
 
-  async generateTextDavinci(description: string): Promise<string | undefined> {
-    var obj = this;
-    return new Promise<string | undefined>((resolve, reject) => {
-      if (this.openai !== undefined) {
-        var prompt = this.storageService.getPrompt();
-        //test - prompt = 'oi, tudo bom?'
-        if (prompt != null) {
-          prompt = prompt.replace('{description}', description);
-          console.log('scrumStoryGPT - prompt: ' + prompt)
-
-          this.openai
-            .createCompletion({
-              //model: 'gpt-3.5-turbo',
-              model: 'text-davinci-003',
-              prompt: prompt,
-              max_tokens: 2000
-            })
-            .then(response => {
-              console.log('scrumStoryGPT - answer GPT: ' + response.data.choices[0].text)
-              resolve(response.data.choices[0].text);
-            })
-            .catch(error => {
-              obj.chatGptError = true
-              console.log('scrumStoryGPT - ' + error)
-              reject(error);
-            });
-        } else {
-          console.log('scrumStoryGPT - prompt is null')
-          reject('');
-        }
-      } else {
-        console.log('scrumStoryGPT - openai without API Key')
-        reject('');
-      }
-    });
-  }
-
-
   addSubTasks() {
     var obj = this;
     this.loading.emit(true);
@@ -202,7 +169,7 @@ export class DescriptionComponent implements Emitter {
     var platform = this.storageService.getPlatform();
 
     console.log('add subtasks', strSubTasks)
-    console.log('chrometabs',chrome.tabs)
+    console.log('chrometabs', chrome.tabs)
     if (chrome.tabs != undefined) {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
         chrome.tabs.sendMessage(tabs[0].id, { platform: platform, action: 'subTasks', subTasks: strSubTasks });
