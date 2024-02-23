@@ -18,6 +18,17 @@ To start adding story descriptions follow these steps:
 > Important to say that adding the description may take from 30 seconds to 1 minute. 
 ![How to add a description](blob/howto-descriptions.gif)
 
+## ⚠️ ATTENTION! ⚠️
+
+To use the extension with OpenAI, you need to have an OpenAI account and get your API key with credits in it otherwise you will get an error like this:
+
+<span style="color: red">```You exceeded your current quota for this API token in OpenAI, please check your usage and billing details```</span>
+
+
+To know the status of your account you can check it in the Usages and Billing section in your OpenAI account.
+
+[https://platform.openai.com/usage](https://platform.openai.com/usage)
+
 ## Examples of a good description
 
 **What is a good pattern to use: Explain WHAT you want, WHICH steps and Acceptance criteria, WHY you need this story, HOW you will test it and WHAT is the definition of done.**
