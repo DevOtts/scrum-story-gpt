@@ -22,6 +22,14 @@ export class StorageService {
     return global?.descriptionPrompt;
   }
 
+  getLastDescription(): string {
+    var global = this.get();
+    var lastDesc = global?.lastDescription;
+    if (lastDesc == null)
+      return '';
+    return lastDesc;
+  }
+
   getSubTasks(): string[] | undefined {
     var global = this.get();
     return global?.defaultSubTasks;
@@ -38,6 +46,15 @@ export class StorageService {
       global = {} as GlobalConfig
     }
     global.defaultSubTasks = subTasks
+    this.save(global);
+  }
+
+  saveLastDescription(description: string) {
+    var global = this.get();
+    if (global == null) {
+      global = {} as GlobalConfig
+    }
+    global.lastDescription = description
     this.save(global);
   }
 
@@ -88,7 +105,7 @@ export class StorageService {
       console.log('load2')
       var global = await this.loadGlobalConfigFromJson().then(
         (data) => {
-          console.log('load2.1' , data)
+          console.log('load2.1', data)
           var globalConfig: GlobalConfig = JSON.parse(data);
           if (globalConfig) {
             console.log('JiraGPT - loadStorage loaded')

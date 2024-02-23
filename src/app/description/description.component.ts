@@ -21,6 +21,7 @@ export class DescriptionComponent implements Emitter {
   useChatGPT: boolean = true;
   chatGPTConfigStatus: boolean = false
   openAIApiErrorLbl: boolean = false
+  openAIErrorType: string = ''
   chatGptError: boolean = false
   openai: OpenAIApi | undefined;
   gptModel = 'gpt-3.5-turbo';
@@ -46,10 +47,14 @@ export class DescriptionComponent implements Emitter {
   ngOnInit(): void {
     var global = this.storageService.get()
     if (global != null) {
+
+      //populate the last description used
+      this.description = this.storageService.getLastDescription();
+
       if (global.chatGPTKey != null && global.chatGPTKey.length >= 10) {
         this.chatGPTConfigStatus = true;        
         this.useChatGPT = true;
-        this.openAIApiErrorLbl = false;
+        this.openAIApiErrorLbl = false;                
         this.openai = new OpenAIApi(new Configuration({
           apiKey: global.chatGPTKey,
         }));
@@ -64,10 +69,15 @@ export class DescriptionComponent implements Emitter {
     console.log('test', test)
   }
 
+  onTextAreaBlur(event: any): void {
+    const text = event.target.value;
+    this.storageService.saveLastDescription(text);
+  }
+
   async addDescription() {
     var obj = this;
     this.chatGptError = false
-    var textIn = this.description
+    var textIn :string | undefined = this.description;    
     this.loading.emit(true);
     console.log('addDescription')
     var platform = this.storageService.getPlatform();
@@ -79,6 +89,9 @@ export class DescriptionComponent implements Emitter {
           chrome.tabs.sendMessage(tabs[0].id, { platform: platform, action: 'descriptionText', text: processingHtml, saveIt: false });
         });
       }
+
+      //save in localStorage the last Description used
+      this.storageService.saveLastDescription(textIn);
 
       var finalText = await this.generateText(textIn)
       if (finalText?.success)
@@ -106,6 +119,7 @@ export class DescriptionComponent implements Emitter {
     var obj = this;
     if (this.openai !== undefined) {
       this.openAIApiErrorLbl = false
+      this.openAIErrorType = ''
       var prompt = this.storageService.getPrompt();
 
       console.log('prompt:', prompt)
@@ -121,27 +135,29 @@ export class DescriptionComponent implements Emitter {
             max_tokens: 2000
           });
 
+          console.log('RESPONSE', response);
+          console.log(response.status)
           if (!response.data || !response.data.choices) {
-            this.openAIApiErrorLbl = true
-            return {
+            return this.handleOpenAIError({
               success: false,
               text: "The bot didn't respond. Please try again later.",
-            };
-          }
+              code: response.status.toString(), // Default error code,
+              message : "unknown_error"
+            });
+          } 
 
           return {
             success: true,
             text: response.data.choices[0].message?.content,
             messageId: response.data.id,
-          };
-
-        } catch (error: any) {
-          console.log('OpenAI Error', error)
-          this.openAIApiErrorLbl = true
-          return {
+          };        
+        } catch (error: any) {          
+          return this.handleOpenAIError({
             success: false,
             text: error?.message,
-          };
+            code: error?.response?.data?.error?.code || "unknown_error", // Extracting the error code
+            message: error?.response?.data?.error?.message || "Unknown error" // Extracting the error message
+          });
         }
       }
       else {
@@ -149,16 +165,26 @@ export class DescriptionComponent implements Emitter {
         return {
           success: false,
           text: 'Empty Prompt',
+          code: "empty_prompt" // Error code for empty prompt
         };
       }
     } else {
-      console.log('scrumStoryGPT - openai without API Key')
+      console.log('scrumStoryGPT - OpenAI API key not defined')
       return {
         success: false,
         text: 'Invalid API Key',
+        code: "invalid_api_key" // Error code for invalid API key
       };
     }
 
+  }
+
+  handleOpenAIError(errorData: { success: boolean, text: string, code: string, message: string }) {
+    console.log('OpenAI Error', errorData);
+    this.openAIApiErrorLbl = true;
+    this.openAIErrorType = errorData.code;
+    return errorData
+    // Here you can handle the error as needed, for example, displaying a user-friendly message based on the error code
   }
 
   addSubTasks() {

@@ -1,8 +1,9 @@
 
   
     <div class="form-group">
+      <div *ngIf="confirmBtnDisabled" class="jira-page-required alert alert-warning" role="alert">Please ensure you are on the Jira card page (not a preview) and that the description is in editor mode.</div>
       <label for="exampleFormControlTextarea1">Story Description</label>      
-      <textarea class="form-control" [(ngModel)]="description" rows="5"></textarea>
+      <textarea class="form-control" [(ngModel)]="description" rows="5" (blur)="onTextAreaBlur($event)"></textarea>
       <small id="emailHelp" class="form-text text-muted"><b>What is a good description:</b> Explain WHAT you want,WHICH steps and Acceptence Criterias, WHY you need this story, HOW you will test it and WHAT is the definition of done.</small>      
       <div class="alert alert-danger" *ngIf="chatGptError">ChatGPT API Key invalid</div>
     </div>
@@ -12,13 +13,15 @@
         <div class="alert alert-warning" *ngIf="useChatGPT && !chatGPTConfigStatus">ChatGPT not configured yet</div>
       </div>
     <div>
-        <!-- <button class="btn btn-primary mb-2" [disabled]="confirmBtnDisabled" (click)="addDescription()">Add Description</button>         -->
+        
         <button class="btn btn-primary mb-2" (click)="addDescription()">Add Description</button>        
         &nbsp;<button class="btn btn-primary mb-2"  (click)="addSubTasks()" id="subtaskBtn">Create SubTasks</button>
-        <!-- <button class="btn btn-primary mb-2" (click)="load()">load file</button>         -->
-        <div *ngIf="useChatGPT && chatGPTConfigStatus && openAIApiErrorLbl" class="jira-page-required alert alert-danger" role="alert">Looks like OpenAI API is down. Please, try again later. If the error continue, please let us know!</div>
+        
+        <div *ngIf="useChatGPT && chatGPTConfigStatus && openAIApiErrorLbl" class="jira-page-required alert alert-danger" role="alert">
+          <span *ngIf="openAIErrorType == 'insufficient_quota'">You exceeded your current quota for this API token in OpenAI, please check your <a href="https://platform.openai.com/usage" target="_blank">usage and billing</a> details</span>
+          <span *ngIf="openAIErrorType != 'insufficient_quota'">Looks like OpenAI API is down. Please, try again later. If the error continue, please let us know!</span>
+        </div>
 
-        <div *ngIf="confirmBtnDisabled" class="jira-page-required alert alert-warning" role="alert">You need to be inside the  Jira card and with the description on editor mode.</div>
         <div *ngIf="message != ''" class=" alert alert-warning" role="alert">{{ message }}</div>
         
     </div>
